@@ -18,13 +18,16 @@ const IntroPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.topContent}>
+        {/* Logo */}
         <Image
           style={styles.image}
           // https://pixabay.com/illustrations/logo-bird-blue-design-wing-animal-4131033/
           source={require("../../assets/bird-pixabay.png")}
         />
+        {/* Title */}
         <Text style={styles.title}>BirdBox</Text>
       </View>
+      {/* Buttons */}
       <DefaultButton
         text="Login"
         onSelect={() => navigation.navigate("Signin")}

@@ -25,7 +25,11 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Signin" component={SignInPage} />
-        <Stack.Screen name="Signup" component={SignUpPage} />
+        <Stack.Screen
+          name="Signup"
+          component={SignUpPage}
+          options={{ title: "Sign Up" }}
+        />
         <Stack.Screen name="Camera" component={CameraPage} />
         <Stack.Screen name="Caregiver" component={CaregiverPage} />
       </Stack.Navigator>

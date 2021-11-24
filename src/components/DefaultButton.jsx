@@ -8,7 +8,7 @@ import fonts from "../vars/fonts";
 
 const DefaultButton = ({ text, onSelect }) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={() => onSelect}>
+    <TouchableOpacity style={styles.button} onPress={onSelect}>
       <Text style={styles.text}> {text} </Text>
     </TouchableOpacity>
   );
