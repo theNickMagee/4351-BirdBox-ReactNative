@@ -1,0 +1,6 @@
+To Replicate:
+
+Clone repository
+run command "npm i"
+set up expo locally
+run "expo start" 
