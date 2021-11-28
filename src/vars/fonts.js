@@ -6,6 +6,9 @@ const fonts = {
 
   titleFontSize: 40,
   titleFontWeight: "200",
+
+  accessibleButtonFontWeight: "700",
+  accessibleButtonFontSize: 30,
 };
 
 export default fonts;

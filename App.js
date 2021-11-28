@@ -1,8 +1,9 @@
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import IntroPage from "./src/pages/IntroPage";
 import SignInPage from "./src/pages/SignInPage";
@@ -14,6 +15,25 @@ import CaregiverPage from "./src/pages/CaregiverPage";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [userDetails, setUserDetails] = useState();
+
+  useEffect(async () => {
+    try {
+      const value = await AsyncStorage.getItem("userDetails");
+      if (value !== null) {
+        // We have data!!
+        setUserDetails(value);
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+    // if (userDetails) {
+    //   // const foundUser = JSON.parse(userDetails);
+    //   setUserDetails(userDetails);
+    // }
+  }, []);
+
   return (
     <NavigationContainer>
       <StatusBar />
@@ -24,7 +44,11 @@ export default function App() {
           component={IntroPage}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Signin" component={SignInPage} />
+        <Stack.Screen
+          name="Signin"
+          component={SignInPage}
+          options={{ title: "Login" }}
+        />
         <Stack.Screen
           name="Signup"
           component={SignUpPage}

@@ -2,6 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
+
+import UserService from "../services/UserService";
+import colors from "../vars/colors";
+
 import CustomTextInput from "../components/CustomTextInput";
 import DefaultButton from "../components/DefaultButton";
 
@@ -22,7 +26,9 @@ const SignUpPage = (props) => {
   };
 
   // Save changes - TODO: POST to backend
-  const submit = () => {};
+  const submit = () => {
+    UserService.createUser(user);
+  };
   // console log user when user changes
   // useEffect(() => {
   //   console.log(user);
@@ -35,7 +41,7 @@ const SignUpPage = (props) => {
         <CustomTextInput
           value={user.Username}
           placeholder={"Name"}
-          keyboardType={"characters"}
+          keyboardType={"default"}
           setValue={(newValue) => onTextInputChange(newValue, "Username")}
         />
         <CustomTextInput
@@ -47,7 +53,7 @@ const SignUpPage = (props) => {
         <CustomTextInput
           value={user.Password}
           placeholder={"Password"}
-          keyboardType={"characters"}
+          keyboardType={"default"}
           secureText={true}
           setValue={(newValue) => onTextInputChange(newValue, "Password")}
         />
@@ -66,6 +72,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
+    backgroundColor: colors.defaultBackground,
   },
   submitButton: {
     marginBottom: 40,
