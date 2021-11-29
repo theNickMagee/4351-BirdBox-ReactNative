@@ -18,6 +18,7 @@ const CustomTextInput = ({
       placeholder={placeholder}
       keyboardType={keyboardType}
       secureTextEntry={secureText || false}
+      returnKeyType={"done"}
     />
   );
 };
@@ -25,7 +26,7 @@ const CustomTextInput = ({
 const styles = StyleSheet.create({
   input: {
     height: 40,
-    margin: 12,
+    marginVertical: 12,
     borderWidth: 1,
     padding: 10,
   },

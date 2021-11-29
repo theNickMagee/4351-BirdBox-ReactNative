@@ -9,20 +9,17 @@ import colors from "../vars/colors";
 
 import images from "../vars/images";
 
-const HomePage = (props) => {
+const HomePage = ({ navigation }) => {
   const [userDetails, setUserDetails] = useState();
 
-  useEffect(() => {
-    const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-    if (userDetails) {
-      // const foundUser = JSON.parse(userDetails);
-      console.log(userDetails);
-      setUserDetails(userDetails);
-    }
-  }, []);
+  useEffect(() => {}, []);
 
-  const goToBlind = () => {};
-  const goToCareGiver = () => {};
+  const goToBlind = () => {
+    navigation.navigate("Camera");
+  };
+  const goToCareGiver = () => {
+    navigation.navigate("Caregiver");
+  };
 
   return (
     <View style={styles.container}>
@@ -52,6 +49,6 @@ const styles = StyleSheet.create({
 
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
 });

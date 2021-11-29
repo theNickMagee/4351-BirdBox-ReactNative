@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -11,8 +11,12 @@ import SignUpPage from "./src/pages/SignUpPage";
 import HomePage from "./src/pages/HomePage";
 import CameraPage from "./src/pages/CameraPage";
 import CaregiverPage from "./src/pages/CaregiverPage";
+import ContactInfoPage from "./src/pages/ContactInfoPage";
 
 const Stack = createNativeStackNavigator();
+
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 export default function App() {
   const [userDetails, setUserDetails] = useState();
@@ -56,6 +60,11 @@ export default function App() {
         />
         <Stack.Screen name="Camera" component={CameraPage} />
         <Stack.Screen name="Caregiver" component={CaregiverPage} />
+        <Stack.Screen
+          name="Emergency"
+          component={ContactInfoPage}
+          options={{ title: "Emergency Contact" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

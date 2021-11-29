@@ -1,23 +1,23 @@
 // Sign Up Page
 
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import CustomTextInput from "../components/CustomTextInput";
 import DefaultButton from "../components/DefaultButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import colors from "../vars/colors";
+import UserService from "../services/UserService";
 
 const SignInPage = ({ navigation }) => {
   // initial new user state
   const [user, setUser] = useState({
-    Username: "",
-    User_Number: "",
-    Password: "",
-    Emergency_Name: "",
-    Emergency_Number: "",
-    Emergency_Address: "",
+    phoneNumber: "",
+    password: "",
   });
+
+  //login failed?
+  const [failed, setFailed] = useState(false);
 
   // Set fields of user on change
   const onTextInputChange = (value, field) => {
@@ -30,50 +30,54 @@ const SignInPage = ({ navigation }) => {
     // set the state of the user
     // setUser(response.data);
 
-    const userDetails = {
-      Username: "Nick",
-      User_Number: "889",
-      Password: "Nick",
-      Emergency_Name: "Curt",
-      Emergency_Number: "329",
-      Emergency_Address: "Candy Lane",
-    };
     // store the user in localStorage
     // localStorage.setItem("userDetails", JSON.stringify(response.data));
     // localStorage.setItem("userDetails", JSON.stringify(userDetails));
 
     // localStorage.setItem("loggedIn", true);
 
-    try {
-      await AsyncStorage.setItem("userDetails", JSON.stringify(userDetails));
-    } catch (e) {
-      console.log("error storing userdetails: ", e);
-    }
-
-    navigation.navigate("Home");
+    UserService.signInAttempt(user).then((response) => {
+      console.log("RETURNED: ", response);
+      try {
+        AsyncStorage.setItem("userDetails", JSON.stringify(response));
+      } catch (e) {
+        console.log("error storing userdetails: ", e);
+      }
+      if (response && response.id) {
+        navigation.navigate("Home");
+      } else {
+        setFailed(true);
+      }
+    });
+    // await AsyncStorage.setItem("userDetails", JSON.stringify(userDetails));
   };
   // console log user when user changes
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
+  useEffect(() => {
+    console.log("failed: ", failed);
+  }, [failed]);
 
   return (
     <SafeAreaView style={styles.container}>
       {/* TEXT FIELDS */}
-      <SafeAreaView>
+      <SafeAreaView style={styles.textBoxContainer}>
         <CustomTextInput
-          value={user.User_Number}
+          value={user.phoneNumber}
           placeholder={"Phone Number"}
           keyboardType={"number-pad"}
-          setValue={(newValue) => onTextInputChange(newValue, "User_Number")}
+          setValue={(newValue) => onTextInputChange(newValue, "phoneNumber")}
         />
         <CustomTextInput
           value={user.Password}
           placeholder={"Password"}
           keyboardType={"default"}
           secureText={true}
-          setValue={(newValue) => onTextInputChange(newValue, "Password")}
+          setValue={(newValue) => onTextInputChange(newValue, "password")}
         />
+        {failed && (
+          <View style={styles.failedContainer}>
+            <Text style={styles.failedText}>Login Attempt Failed</Text>
+          </View>
+        )}
       </SafeAreaView>
       {/* SUBMIT BUTTON */}
       <View style={styles.submitButton}>
@@ -88,11 +92,25 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
+    alignItems: "stretch",
     backgroundColor: colors.defaultBackground,
+    padding: 30,
   },
   submitButton: {
     marginBottom: 40,
+    paddingHorizontal: 30,
+  },
+  textBoxContainer: {
+    paddingHorizontal: 30,
+  },
+  failedContainer: {
+    alignSelf: "stretch",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  failedText: {
+    color: "red",
   },
 });
 

@@ -7,7 +7,42 @@ import { TouchableOpacity, View, Text, StyleSheet, Image } from "react-native";
 import colors from "../vars/colors";
 import fonts from "../vars/fonts";
 
-const AccessibleButton = ({ imageSrc, text, onSelect }) => {
+const AccessibleButton = ({ imageSrc, text, onSelect, radius }) => {
+  const styles = StyleSheet.create({
+    button: {
+      display: "flex",
+      width: radius ? radius : 300,
+      height: radius ? radius : 300,
+      alignItems: "center",
+      justifyContent: "center",
+      textAlign: "center",
+
+      backgroundColor: colors.accessableButtonColor,
+      borderWidth: 2,
+      // backgroundColor: "#000",
+      borderRadius: 100,
+      borderColor: "#000",
+    },
+    text: {
+      color: colors.accessableButtonTextColor,
+      fontSize: radius ? radius / 10 : fonts.accessibleButtonFontSize,
+
+      letterSpacing: fonts.defaultButtonLetterSpacing,
+      fontWeight: fonts.accessibleButtonFontWeight,
+      paddingTop: 20,
+
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      textAlign: "center",
+    },
+    image: {
+      width: radius ? radius / 3 : 100,
+      height: radius ? radius / 3 : 100,
+      resizeMode: "contain",
+    },
+  });
+
   return (
     <View>
       <TouchableOpacity style={styles.button} onPress={onSelect}>
@@ -19,32 +54,3 @@ const AccessibleButton = ({ imageSrc, text, onSelect }) => {
 };
 
 export default AccessibleButton;
-
-const styles = StyleSheet.create({
-  button: {
-    display: "flex",
-    width: 500,
-    height: 500,
-    alignItems: "center",
-    justifyContent: "center",
-
-    backgroundColor: colors.accessableButtonColor,
-    borderWidth: 2,
-    // backgroundColor: "#000",
-    borderRadius: 100,
-    borderColor: "#000",
-  },
-  text: {
-    color: colors.accessableButtonTextColor,
-    fontSize: fonts.accessibleButtonFontSize,
-
-    letterSpacing: fonts.defaultButtonLetterSpacing,
-    fontWeight: fonts.accessibleButtonFontWeight,
-    paddingTop: 20,
-  },
-  image: {
-    width: 240,
-    height: 240,
-    resizeMode: "contain",
-  },
-});

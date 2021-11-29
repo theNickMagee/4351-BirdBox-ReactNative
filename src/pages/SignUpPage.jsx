@@ -9,15 +9,12 @@ import colors from "../vars/colors";
 import CustomTextInput from "../components/CustomTextInput";
 import DefaultButton from "../components/DefaultButton";
 
-const SignUpPage = (props) => {
+const SignUpPage = ({ navigation }) => {
   // initial new user state
   const [user, setUser] = useState({
-    Username: "",
-    User_Number: "",
-    Password: "",
-    Emergency_Name: "",
-    Emergency_Number: "",
-    Emergency_Address: "",
+    name: "",
+    phoneNumber: "",
+    password: "",
   });
 
   // Set fields of user on change
@@ -28,6 +25,7 @@ const SignUpPage = (props) => {
   // Save changes - TODO: POST to backend
   const submit = () => {
     UserService.createUser(user);
+    navigation.navigate("Home");
   };
   // console log user when user changes
   // useEffect(() => {
@@ -37,25 +35,25 @@ const SignUpPage = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       {/* TEXT FIELDS */}
-      <SafeAreaView>
+      <SafeAreaView style={styles.textBoxContainer}>
         <CustomTextInput
-          value={user.Username}
+          value={user.name}
           placeholder={"Name"}
           keyboardType={"default"}
-          setValue={(newValue) => onTextInputChange(newValue, "Username")}
+          setValue={(newValue) => onTextInputChange(newValue, "name")}
         />
         <CustomTextInput
-          value={user.User_Number}
+          value={user.phoneNumber}
           placeholder={"Phone Number"}
           keyboardType={"number-pad"}
-          setValue={(newValue) => onTextInputChange(newValue, "User_Number")}
+          setValue={(newValue) => onTextInputChange(newValue, "phoneNumber")}
         />
         <CustomTextInput
-          value={user.Password}
+          value={user.password}
           placeholder={"Password"}
           keyboardType={"default"}
           secureText={true}
-          setValue={(newValue) => onTextInputChange(newValue, "Password")}
+          setValue={(newValue) => onTextInputChange(newValue, "password")}
         />
       </SafeAreaView>
       {/* SUBMIT BUTTON */}
@@ -71,11 +69,16 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     backgroundColor: colors.defaultBackground,
+    paddingHorizontal: 30,
   },
   submitButton: {
     marginBottom: 40,
+    paddingHorizontal: 30,
+  },
+  textBoxContainer: {
+    paddingHorizontal: 30,
   },
 });
 
