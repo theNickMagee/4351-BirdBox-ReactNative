@@ -42,6 +42,8 @@ const ContactInfoPage = ({ navigation, route }) => {
       text: isTextSelected,
       call: isCallSelected,
     });
+
+    navigation.navigate("Caregiver");
   };
 
   return (

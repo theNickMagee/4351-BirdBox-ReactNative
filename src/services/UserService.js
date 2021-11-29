@@ -5,7 +5,7 @@ import BASE_URL from "../vars/backend.js";
 //make a user - send POST request
 const createUser = (userData) => {
   console.log("creating user: ", JSON.stringify(userData));
-  fetch(BASE_URL + "/users", {
+  return fetch(BASE_URL + "/users", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -14,8 +14,16 @@ const createUser = (userData) => {
     body: JSON.stringify(userData),
   })
     .then((response) => {
-      return response.data;
-      console.log("successful creating of user: ", response.data);
+      // return response.data;
+      console.log("successful creating of user: ", response);
+      return response.json();
+    })
+    .catch((e) => {
+      console.log("error creating user: ", e);
+    })
+    .then((data) => {
+      console.log("second resposnse: ", data);
+      return data;
     })
     .catch((e) => {
       console.log("error creating user: ", e);

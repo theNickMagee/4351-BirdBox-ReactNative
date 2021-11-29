@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import UserService from "../services/UserService";
 import colors from "../vars/colors";
@@ -24,7 +25,13 @@ const SignUpPage = ({ navigation }) => {
 
   // Save changes - TODO: POST to backend
   const submit = () => {
-    UserService.createUser(user);
+    UserService.createUser(user).then((response) => {
+      try {
+        AsyncStorage.setItem("userDetails", JSON.stringify(response));
+      } catch (e) {
+        console.log("error storing userdetails: ", e);
+      }
+    });
     navigation.navigate("Home");
   };
   // console log user when user changes
